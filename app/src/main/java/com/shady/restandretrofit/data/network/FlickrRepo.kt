@@ -11,7 +11,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FlickrRepo {
-    private val tag = "FlickrRepo"
     private val api = FlickrBuilder.flickrApi
 
     suspend fun fetchInterestingList(): FlickrData = withContext(Dispatchers.IO) {
