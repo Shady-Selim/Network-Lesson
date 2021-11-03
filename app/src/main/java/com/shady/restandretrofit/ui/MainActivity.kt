@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.shady.restandretrofit.R
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         val vm = ViewModelProvider(this).get(MainVM::class.java)
 
         flickrRV = findViewById(R.id.rvFlickr)
-        flickrRV.layoutManager = GridLayoutManager(this, 2)
+        flickrRV.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)  //GridLayoutManager(this, 2)
 
         vm.fetchInterestingList().observe(this, {
             flickrRV.adapter = FlickrAdapter(it.photos.photo)

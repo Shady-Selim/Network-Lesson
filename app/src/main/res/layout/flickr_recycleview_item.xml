@@ -6,7 +6,8 @@
 
     <ImageView
         android:id="@+id/ivFlickr"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:adjustViewBounds="true"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +19,12 @@
         android:id="@+id/tvFlickr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:layout_margin="2dp"
+        android:layout_marginTop="8dp"
+        android:background="#77ffffff"
         android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/ivFlickr"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.shady.restandretrofit.R
 import com.shady.restandretrofit.data.models.FlickrPhoto
 
@@ -18,6 +19,7 @@ class FlickrAdapter(val photosData: List<FlickrPhoto>) : RecyclerView.Adapter<Cu
     override fun onBindViewHolder(holder: CustomHolder, position: Int) {
         val photo = photosData[position]
         holder.titleTV.text = photo.title
+        holder.imageIV.load(photo.url)
     }
 
     override fun getItemCount(): Int {
