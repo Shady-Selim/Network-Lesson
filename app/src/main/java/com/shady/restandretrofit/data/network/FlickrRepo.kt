@@ -3,6 +3,9 @@ package com.shady.restandretrofit.data.network
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.shady.restandretrofit.data.models.FlickrData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,20 +14,7 @@ class FlickrRepo {
     private val tag = "FlickrRepo"
     private val api = FlickrBuilder.flickrApi
 
-    fun fetchInterestingList(): LiveData<String> {
-        val liveDataResponse: MutableLiveData<String> = MutableLiveData()
-        val flickrResponse: Call<String> = api.fetchPhotos()
-        flickrResponse.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.d(tag, "Response Received")
-                liveDataResponse.value = response.body()
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e(tag, "Failed to fetch response")
-            }
-
-        })
-        return liveDataResponse
+    suspend fun fetchInterestingList(): FlickrData = withContext(Dispatchers.IO) {
+        api.fetchPhotos()
     }
 }
