@@ -11,16 +11,19 @@ import kotlinx.coroutines.launch
 
 class MainVM: ViewModel() {
     val repo = FlickrRepo()
-    fun fetchInterestingList(): LiveData<FlickrData>{
+    fun fetchInterestingList(searchKeyword: String?): LiveData<FlickrData>{
         val photos = MutableLiveData<FlickrData>()
             viewModelScope.launch {
                 try {
-                    photos.postValue(repo.fetchInterestingList())
+                    if (searchKeyword.isNullOrEmpty()){
+                        photos.postValue(repo.fetchInterestingList())
+                    } else {
+                        photos.postValue(repo.searchPhotos(searchKeyword))
+                    }
                 } catch (e: Throwable) {
                     Log.e("Flickr Image","Flickr Image Problem: ${e.localizedMessage}")
                 }
             }
         return photos
     }
-
 }

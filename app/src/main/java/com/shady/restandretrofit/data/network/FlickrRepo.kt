@@ -16,4 +16,7 @@ class FlickrRepo {
     suspend fun fetchInterestingList(): FlickrData = withContext(Dispatchers.IO) {
         api.fetchPhotos()
     }
+    suspend fun searchPhotos(searchKeyword: String): FlickrData = withContext(Dispatchers.IO) {
+        api.searchPhotos(searchKeyword)
+    }
 }
