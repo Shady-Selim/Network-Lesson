@@ -9,13 +9,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.shady.restandretrofit.R
+import com.shady.restandretrofit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var flickrRV: RecyclerView
+    private lateinit var binding: ActivityMainBinding
     private val vm by lazy {
         ViewModelProvider(this).get(MainVM::class.java)
     }
@@ -24,10 +26,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
 
-        flickrRV = findViewById(R.id.rvFlickr)
-        flickrRV.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)  //GridLayoutManager(this, 2)
+        //flickrRV = findViewById(R.id.rvFlickr)
+        binding.rvFlickr.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)  //GridLayoutManager(this, 2)
         sharedPreferences = this.getSharedPreferences("flickrSearchSharePreference", Context.MODE_PRIVATE)
         loadFlickrImages()
     }
@@ -35,9 +38,9 @@ class MainActivity : AppCompatActivity() {
     private fun loadFlickrImages(query: String? = null) {
         vm.fetchInterestingList(query).observe(this, {
             if(query.isNullOrEmpty()){
-                flickrRV.adapter = FlickrAdapter(it.photos.photo)
+                binding.rvFlickr.adapter = FlickrAdapter(it.photos.photo)
             } else {
-                flickrRV.swapAdapter(FlickrAdapter(it.photos.photo), false)
+                binding.rvFlickr.swapAdapter(FlickrAdapter(it.photos.photo), false)
             }
             Log.d("Flickr Main Response", it.photos.toString())
         })
